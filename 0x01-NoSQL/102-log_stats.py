@@ -30,13 +30,21 @@ def main():
                                                     "method": "GET",
                                                     "path": "/status"
                                                     })))
-    print(collection.find())
     print("IPs:")
     ips = collection.aggregate([
         {
-            "$group": {"ip": "$ip", }
+            "$group": {"_id": "$ip","sum": {"$sum": 1} }
+        },
+        {
+            "$sort": {"sum": -1}
+        },
+        {
+            "$limit": 10
         }
     ])
+
+    for ip in ips:
+        print("\t{}: {}".format(ip.get('_id'), ip.get('sum')))
 
 
 if __name__ == "__main__":
