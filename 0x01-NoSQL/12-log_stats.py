@@ -15,16 +15,16 @@ def main():
     collection = db.nginx
     print("{} logs".format(collection.count_documents({})))
     print("Methods:")
-    print("\t method GET: {}".format(collection.
-                                     count_documents({"method": "GET"})))
-    print("\t method POST: {}".format(collection.
-                                      count_documents({"method": "POST"})))
-    print("\t method PUT: {}".format(collection.
-                                     count_documents({"method": "PUT"})))
-    print("\t method PATCH: {}".format(collection.
-                                       count_documents({"method": "PATCH"})))
-    print("\t method DELETE: {}".format(collection.
-                                        count_documents({"method": "DELETE"})))
+    print("\tmethod GET: {}".format(collection.
+                                    count_documents({"method": "GET"})))
+    print("\tmethod POST: {}".format(collection.
+                                     count_documents({"method": "POST"})))
+    print("\tmethod PUT: {}".format(collection.
+                                    count_documents({"method": "PUT"})))
+    print("\tmethod PATCH: {}".format(collection.
+                                      count_documents({"method": "PATCH"})))
+    print("\tmethod DELETE: {}".format(collection.
+                                       count_documents({"method": "DELETE"})))
     print("{} status check".format(collection.
                                    count_documents({
                                                     "method": "GET",
