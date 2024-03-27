@@ -30,6 +30,13 @@ def main():
                                                     "method": "GET",
                                                     "path": "/status"
                                                     })))
+    print(collection.find())
+    print("IPs:")
+    ips = collection.aggregate([
+        {
+            "$group": {"ip": "$ip", }
+        }
+    ])
 
 
 if __name__ == "__main__":
