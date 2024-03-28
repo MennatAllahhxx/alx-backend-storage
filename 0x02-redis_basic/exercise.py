@@ -4,8 +4,27 @@ exercise file contains Cache class
 """
 
 from typing import Union, Callable
+from functools import wraps
 import uuid
 import redis
+
+
+def count_calls(method: Callable) -> Callable:
+    """AI is creating summary for count_calls
+
+    Args:
+        method (Callable): key of the data
+
+    Returns:
+        Callable: wrapper
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        key = method.__qualname__
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+
+    return wrapper
 
 
 class Cache:
@@ -15,6 +34,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """AI is creating summary for store
 
