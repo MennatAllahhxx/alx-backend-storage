@@ -29,7 +29,7 @@ class Cache:
         return key
 
     def get(self, key: str,
-            fn: Union[Callable, None]):
+            fn: Union[Callable, None]) -> Union[str, bytes, int, float]:
         """AI is creating summary for get
 
         Args:
