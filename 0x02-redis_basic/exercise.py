@@ -48,6 +48,19 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(method: Callable):
+    key = method.__qualname__
+    r = redis.Redis()
+    count = r.get(key).decode("utf-8")
+    print("{} was called {} times:".format(key, count))
+    ins = r.lrange("{}:inputs".format(key), 0, -1)
+    outs = r.lrange("{}:outputs".format(key), 0, -1)
+    for ip, op in zip(ins, outs):
+        print("{}(*{}) -> {}". format(key,
+                                      ip.decode("utf-8"),
+                                      op.decode("utf-8")))
+
+
 class Cache:
     """AI is creating summary for class Cache
     """
