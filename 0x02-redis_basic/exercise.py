@@ -49,6 +49,11 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(method: Callable):
+    """AI is creating summary for replay
+
+    Args:
+        method (Callable): key of the data
+    """
     key = method.__qualname__
     r = redis.Redis()
     count = r.get(key).decode("utf-8")
