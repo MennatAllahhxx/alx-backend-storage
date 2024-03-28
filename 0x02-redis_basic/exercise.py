@@ -28,13 +28,17 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str,
-            fn: Union[Callable, None] = None):
+    def get(self, key: str, fn: Union[Callable, None] = None):
         """AI is creating summary for get
 
         Args:
-            key (str): key of the data
-            fn (Optional[Callable]): to convert the data to the desired format
+            key (str): key of the data.
+            fn (Union[Callable, None], optional): to convert the data to
+                                                  the desired format.
+                                                  Defaults to None.
+
+        Returns:
+            Union[str, bytes, int, float]: data corresponding to the key
         """
         val = self._redis.get(key)
 
