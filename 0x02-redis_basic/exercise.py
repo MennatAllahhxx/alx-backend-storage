@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-exercise file contains Cache class
+exercise file contains Cache class, count_call and call_history decorators
 """
 
 from typing import Union, Callable
@@ -27,6 +27,27 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
+def call_history(method: Callable) -> Callable:
+    """AI is creating summary for call_history
+
+    Args:
+        method (Callable): key of the data
+
+    Returns:
+        Callable: wrapper
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        key = method.__qualname__
+        ins = str(args)
+        self._redis.rpush("{}:inputs".format(key), ins)
+        outs = str(method(self, *args, **kwargs))
+        self._redis.rpush("{}:outputs".format(key), outs)
+        return outs
+
+    return wrapper
+
+
 class Cache:
     """AI is creating summary for class Cache
     """
@@ -35,6 +56,7 @@ class Cache:
         self._redis.flushdb()
 
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """AI is creating summary for store
 
